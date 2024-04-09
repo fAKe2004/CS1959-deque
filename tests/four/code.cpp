@@ -6,8 +6,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
-#include "deque.hpp"
-#include "exceptions.hpp"
+#include "../../deque.hpp"
+#include "../../exceptions.hpp"
 
 
 /***************************/
@@ -105,12 +105,17 @@ void test3(){
     {
         int t1 = rand() % num;
         int t2 = rand() % num;
-        if(*(q.begin() + t1) != *(stl.begin() + t1)){puts("Wrong Answer");return;}
-        if(t2 && *(q.end() - t2) != *(stl.end() - t2)){puts("Wrong Answer");return;}
-        if((q.begin() + t1) - (q.begin() + t2) != (t1 - t2)){puts("Wrong Answer");return;}
+        if(*(q.begin() + t1) != *(stl.begin() + t1)){
+            puts("Wrong Answer");return;}
+        if(t2 && *(q.end() - t2) != *(stl.end() - t2)){
+            puts("Wrong Answer");return;}
+        if((q.begin() + t1) - (q.begin() + t2) != (t1 - t2)){
+            puts("Wrong Answer");return;}
     }
-    if((q.begin() + num) != q.end()) {puts("Wrong Answer");return;}
-    if((q.end() - num) != q.begin()) {puts("Wrong Answer");return;}
+    if((q.begin() + num) != q.end()) {
+        puts("Wrong Answer");return;}
+    if((q.end() - num) != q.begin()) {
+        puts("Wrong Answer");return;}
     bool flag=0;
     sjtu::deque<T> other;
     try{
@@ -118,32 +123,42 @@ void test3(){
     }catch(...){
         flag=1;
     }
-    if(!flag && need_to_check_throw) {puts("Wrong Answer");return;}
+    if(!flag && need_to_check_throw) {
+        puts("Wrong Answer");return;
+        }
     it_q = q.begin();
     it_stl = stl.begin();
     for(int i=1;i<=10;i++){
         int t = rand() % (num / 10);
         it_q += t;
         it_stl += t;
-        if(*it_q != *it_stl) {puts("Wrong Answer");return;}
-        if(it_q -> num() != it_stl -> num()) {puts("Wrong Answer");return;}
+        if(*it_q != *it_stl) {
+            puts("Wrong Answer");return;}
+        if(it_q -> num() != it_stl -> num()) {
+            puts("Wrong Answer");return;}
     }
     it_q = --q.end();
     it_stl = --stl.end();
-    if(*it_q != *it_stl) {puts("Wrong Answer");return;}
+    if(*it_q != *it_stl) {
+        puts("Wrong Answer");return;}
     for(int i=1;i<10;i++){
         int t = rand() % (num / 10);
         it_q -= t;
         it_stl -= t;
-        if(*it_q != *it_stl) {puts("Wrong Answer");return;}
+        if(*it_q != *it_stl) {
+            puts("Wrong Answer");return;}
         it_q -> change(t);;
         it_stl -> change(t);
-        if(*it_q != *it_stl) {puts("Wrong Answer");return;}
+        if(*it_q != *it_stl) {
+            puts("Wrong Answer");return;}
     }
-    if(!equal()) {puts("Wrong Answer");return;}
-    if (!(q.begin() + 10 == q.begin() +5 + 6 - 1)) {puts("Wrong Answer");return;}
+    if(!equal()) {
+        puts("Wrong Answer");return;}
+    if (!(q.begin() + 10 == q.begin() +5 + 6 - 1)) {
+        puts("Wrong Answer");return;}
     sjtu::deque<T> pp;
-    if(q.end() == pp.end()){puts("Wrong Answer");return;}
+    if(q.end() == pp.end()){
+        puts("Wrong Answer");return;}
 
     int t = rand() % (q.size() - 1);
     it_q = q.begin() + t;
@@ -312,7 +327,7 @@ void test7(){
     puts("Accept");
 }
 int main(){
-    srand(time(NULL));
+    // srand(time(NULL));
     puts("test start:");
     test1();//push & pop
     test2();//at & [] & front & back

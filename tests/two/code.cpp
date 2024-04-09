@@ -6,12 +6,13 @@
 #include <deque>
 #include <random>
 
-#include "class-integer.hpp"
-#include "class-matrix.hpp"
-#include "class-bint.hpp"
-#include "deque.hpp"
+#include "../../class-integer.hpp"
+#include "../../class-matrix.hpp"
+#include "../../class-bint.hpp"
+#include "../../deque.hpp"
 
-std::default_random_engine randnum(time(NULL));
+std::default_random_engine randnum(0);
+// std::default_random_engine randnum(time(NULL));
 
 static const int MAX_N = 15000;
 
@@ -205,6 +206,8 @@ bool iteratorTest() {
     return *ansIter == *myIter;
 }
 
+bool DBG_FLAG;
+
 bool eraseTest() {
     std::deque<int> ans;
     sjtu::deque<int> deq;
@@ -213,7 +216,9 @@ bool eraseTest() {
 
     for (int i = 0; i < 100; i++) {
         int pos = randnum() % ans.size();
-
+        
+        std::cerr << i << std::endl;
+        DBG_FLAG = true;
         switch (randnum() % 2) {
             case 0: deq.erase(deq.begin() + pos);
                     ans.erase(ans.begin() + pos);
@@ -221,6 +226,11 @@ bool eraseTest() {
             case 1: deq.erase(deq.end() - 1 - pos);
                     ans.erase(ans.end() - 1 - pos);
                     break;
+        }
+
+        if (!isEqual(ans, deq)) {
+            std::cerr << "FAIL on : " << i << std::endl;
+            return false;
         }
     }
 
@@ -309,7 +319,8 @@ bool memoryTest() {
 
     for (int i = 0; i < MAX_N / 10; i++) {
         int index = randnum() % ans.size();
-        switch(randnum() % 6) {
+        int opt = randnum() % 6;
+        switch(opt) {
             case 0: ans.push_back(DynamicType(&ansCounter));
                     deq.push_back(DynamicType(&myCounter));
                     break;
@@ -329,8 +340,10 @@ bool memoryTest() {
             default : break;
         }
 
-        if (ansCounter != myCounter)
+        if (ansCounter != myCounter) {
+            std::cerr << "FAIL ON OPT " << opt << " " << i << std::endl;
             return false;
+        }
     }
 
     return isEqual(ans, deq);
@@ -457,6 +470,7 @@ int main() {
     };
 
     bool error = false;
+    // for (int i = 0; i < sizeof(testFunc) / sizeof(testFunc[0]); i++) {
     for (int i = 0; i < sizeof(testFunc) / sizeof(testFunc[0]); i++) {
         printf("%-40s", testMessage[i]);
         if (testFunc[i]())
@@ -471,7 +485,7 @@ int main() {
         printf("\nUnfortunately, you failed in this test\n\a");
     else
         printf("\nCongratulations, your deque passed all the tests!\n");
-
+    getchar();
     return 0;
 }
 

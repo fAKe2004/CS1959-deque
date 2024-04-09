@@ -1,4 +1,4 @@
-#include "deque.hpp"
+#include "../../deque.hpp"
 
 #include <ctime>
 #include <iostream>
@@ -201,9 +201,13 @@ std::pair<bool, double> eraseChecker() {
     }
     timer.init();
     for (int i = 0; i < N; i++) {
+        if (i == 1013)
+            std::cerr << "Debug" << std::endl;
         int pos = rand() % b.size();
         a.erase(a.begin() + pos);
         b.erase(b.begin() + pos);
+        if (a.size() != b.size())
+            return std::make_pair(false, 0);
     }
     timer.stop();
     if (!isEqual(a, b)) {
